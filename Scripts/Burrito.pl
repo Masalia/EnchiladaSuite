@@ -1,9 +1,7 @@
 ##########################
 #
-# Author: Sariel Hubner, sariel.hubner@botany.ubc.ca
-# Ammended by: Rishi R. Masalia, rishimasalia@gmail.com, Jan 2016 - April 2017, Burke Lab, UGA
-# Please don't distribute
-#
+# Author: Rishi R. Masalia, rishimasalia@gmail.com, Sariel Hubner, sariel.hubner@botany.ubc.ca
+# 
 # Summary: Burrito is a wrapper for the Manhattanizer (augmentation of Sariel's original Helimap pipeline)
 # It treats traits and environments individually, and produces a Manhattan plot & list of significant SNPs.
 # EMMAX is run with kinship and structure (PCA) to get associations
@@ -50,7 +48,7 @@ while(<ENVS>){
         	$env5_file = "NA";
 		$kinship = "no";
 		$PCA = "no";
-		$fdrcutoff = 0.05;
+		$fdrcutoff = 0.05; #Can implement if you want - have to change Manhat code
 		$color1 = "dodgerblue4"; #### Choose whatever colors you want for 1 and 2 from R colors
 		$color2 = "red";
 
