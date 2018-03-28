@@ -13,4 +13,4 @@ This will run all modules sequentially with default parameters (these can be cha
 
 # Authorship:
 
-This pipeline was created by Rishi R. Masalia, University of Georgia, Burke Lab. Burrito was created in collaboration with Sariel Hubner, University of British Columbia. Programs used in this pipeline: qqman (biorXiv DOI: 10.1101/005165), SNPRelate, lme4, ggplot, RColorBrewer, EMMAX, BEAGLEvXX, PLINKv1.9, LDselect.pl, data.table, 
+This pipeline was created by Rishi R. Masalia, University of Georgia, Burke Lab. Burrito was created in collaboration with Sariel Hubner, University of British Columbia. Programs used in this pipeline: qqman (Turner, 2014), SNPRelate (Zheng et al, 2012), lme4 (Bates et al, 2015), ggplot2 (Wickham, 2009), RColorBrewer (Neuwirth, 2005), EMMAX (Kang, 2010), BEAGLEv4.1 (Browning and Browning, 2016), PLINKv1.9 (Purcell and Chang, 2017), LDselect.pl (Carlson et al, 2004), data.table (Dowle, 2017). 
