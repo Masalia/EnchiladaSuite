@@ -21,7 +21,7 @@ print CONFIG "$comment\n$MainEnv\n$genes\n";
 
 ############# Run The R Scripts ###########################
 
-system("Rscript GUAC.r Avocado.config");	
+system("Rscript GUAC.R Avocado.config");	
 
 #put the data into a folder:
 
