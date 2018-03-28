@@ -8,7 +8,7 @@
 #
 ##########################################################################33
 
-setwd("/home/burke_lab/Desktop/XRQ_Nov2017_213/EnchiladaSuite/GUAC/")
+setwd("/PATH/EnchiladaSuite/GUAC/")
 
 config = read.table(file="Avocado.config")
 fname = config[1,1]
