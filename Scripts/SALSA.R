@@ -1,4 +1,4 @@
-setwd("/home/burke_lab/Desktop/XRQ_Nov2017_213/EnchiladaSuite/SALSA/")
+setwd("/PATH/EnchiladaSuite/SALSA/")
 
 if (!require("data.table")) {
   install.packages("data.table", dependencies = TRUE)
