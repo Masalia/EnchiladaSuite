@@ -1,0 +1,20 @@
+#GUAC:
+
+This script is a direct follow up to the SALSA module. It is designed to take the “/Ouputs/Tables/Pre_Identified_Cluster.csv" list and create a new list of genes underlying those clusters based on the HanXRQr1.0-20151230-EGN-r1.2.gff3 file found at https://www.heliagene.org/HanXRQ-SUNRISE/
+
+If you have multiple traits or the same trait across environments mapping to the same region, these genes are listed multiple times in the final file. To get a final gene count, the USER should remove duplicated genes.
+
+#How to run:
+
+perl GUAC.pl -b 1
+
+Where 'b' is the buffer flag that indicates how many genes bracketing your region of interest you'd like to include. The default is set to 1. 
+
+Contents in GUAC directory:
+
+1. Avocado.config → example configuration file
+2. HanXRQr1.0-20151230-EGN-r1.2.gff3 → GFFE file as downloaded from https://www.heliagene.org/HanXRQ-SUNRISE/
+
+Outputs:
+1. "ListofGenes.txt" → This is a long list of genes underlying associated regions (including the buffer). 
+2. "NoGenesPerBin.txt" → This is a summary file of the number of genes per associated region
