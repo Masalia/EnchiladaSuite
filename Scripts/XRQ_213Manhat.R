@@ -2,10 +2,8 @@
 ### Burrito {Manhattanizer}
 #########################################################
 #
-# Author: Sariel Hubner, sariel.hubner@botany.ubc.ca
-# Ammended by: Rishi R. Masalia, rishimasalia@gmail.com, Jan 2016 - April 2017, Burke Lab, UGA
-# Please don't distribute
-#
+# Authors: Rishi R. Masalia, rishimasalia@gmail.com, Sariel Hubner, sariel.hubner@botany.ubc.ca
+# 
 # Summary: Burrito is a wrapper for the Manhattanizer (augmentation of Sariel's original Helimap pipeline)
 # It treats traits and environments individually, and produces a Manhattan plot & list of significant SNPs.
 # EMMAX is run with kinship and structure (PCA) to get associations
@@ -57,7 +55,7 @@ library(tools)
 ### Read and prepare files
 #########################################################
 
-setwd("/home/burke_lab/Desktop/XRQ_Nov2017_213/EnchiladaSuite/Burrito/") ##### change this to match your path to Enchilada
+setwd("/PATH/EnchiladaSuite/Burrito/") ##### change this to match your path to Enchilada
 
 ##########################################################33
 config = read.table(file="Asada.config")
@@ -110,9 +108,9 @@ for(j in 1:num_rep) {
 cat ("Reading the map.......................")
 snp.map = read.table(file="XRQ_213.map",header= T) 
 
-numLoci = 640508 #New values with April2017
-InferrMeff = 88009 #Generated from Lexuan using Beagle 
-adj = (0.05/88009) #LOD6
+numLoci = 640508 #New SNP numbers for 213 genotypes (Oct2017)
+InferrMeff = 88009 #Genetered from SNP data through BEAGLEv4.1 
+adj = (0.05/88009) #~LOD6
 cat("Total number of SNPs is: ", numLoci, "\n")
 cat("Inferred Meff is: ", InferrMeff, "\n")
 #adj<-0.05/sum(simpleMeff)
