@@ -1,5 +1,5 @@
 ##########################
-# Author: Rishi R. Masalia, rishimasalia@gmail.com, UGA, Burke Lab, April 2017
+# Author: Rishi R. Masalia, rishimasalia@gmail.com
 #
 # Purpose: this pipeline is a direct follow up to the GWAS Pipeline by Hubner and Masalia. 
 # It is designed to take significnat SNPs from a manhattan plot, and identify LD boundaries
@@ -48,7 +48,7 @@ while(<ENVS>){
 
 		system("mv Tomato.config ../EnchiladaSuite/SALSA/");
 		system("cp ../EnchiladaSuite/SALSA/TraitHopper/$Trait\_* ../EnchiladaSuite/SALSA/");
-		system("Rscript ./SALSA_New.R ../EnchiladaSuite/SALSA/Tomato.config");	
+		system("Rscript ./SALSA.R ../EnchiladaSuite/SALSA/Tomato.config");	
 		system("rm ../EnchiladaSuite/SALSA/*.sigsnps");
 		system("rm ../EnchiladaSuite/SALSA/Ready_tmp.tped");
 		system("rm ../EnchiladaSuite/SALSA/tmp.tped");
