@@ -5,7 +5,18 @@
 # Purpose: this script is a direct follow up to SALSA by Masalia. 
 # It is designed to take a "Pre_Identified_Cluster.csv" list and create a new list of genes underlying those clusters
 #
+# Preferences are controlled in the configuration file ("Avacado.config")
 #
+# Please set the current working directory, by replacing the "PATH" portion. 
+#
+# ******* Hard coded infomration!!! ****** If you are NOT using this for GWAS of 213 genotypes in the SAM population. You
+# have to change some hard coded information. Harded coded infomration starts on lines: 
+#
+# 30 (GFF3 file)
+#
+#########################################################
+### Installing and loading required packages
+#########################################################
 ##########################################################################33
 
 setwd("/PATH/EnchiladaSuite/GUAC/")
