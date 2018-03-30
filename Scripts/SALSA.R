@@ -1,3 +1,25 @@
+#########################################################
+### Salsa
+#########################################################
+#
+# Author: Rishi R. Masalia, rishimasalia@gmail.com
+# 
+# Summary: This script groups blocks of significant SNPs together and is run after Burrito. 
+# 
+# Preferences are controlled in the configuration file ("Tomato.config")
+#
+# Please set the current working directory, by replacing the "PATH" portion. 
+#
+# ******* Hard coded infomration!!! ****** If you are NOT using this for GWAS of 213 genotypes in the SAM population. You
+# have to change some hard coded information. Harded coded infomration starts on lines: 
+#
+# 85 (Change the TPED file)
+#
+#########################################################
+### Installing and loading required packages
+#########################################################
+
+
 setwd("/PATH/EnchiladaSuite/SALSA/")
 
 if (!require("data.table")) {
@@ -23,7 +45,8 @@ library(grid)
 library(gridExtra)
 library(gridBase)
 library(coxme)
-############ Variables set up
+
+############ CONFIG set up
 config = read.table(file="Tomato.config")
 trait = config[1,1]
 num_env = config[2,1]
@@ -31,14 +54,13 @@ prefix = config[3,1]
 envFiles = c(as.character(config[5,1]),as.character(config[7,1]),as.character(config[9,1]),as.character(config[11,1]),as.character(config[13,1]))
 envNames = c(as.character(config[4,1]),as.character(config[6,1]),as.character(config[8,1]),as.character(config[10,1]),as.character(config[12,1]))
 thresh = config[14,1] #This is which thresholding value you want to use 'bon' for bonferonni SimpleM, or FDR for the fdr value
+
 ###################################
 num_env<-as.numeric(as.character(num_env))
 print(num_env)
 
 picmat = NULL
-
-
-##### Loop treatment
+##### Loop per Environment
 for (t in 1:num_env){
   Environment = envNames[t]
   snp_file = read.table(file=envFiles[t],header=T) 
@@ -46,16 +68,11 @@ for (t in 1:num_env){
     print ("Skipping this file, no rows present.....................")
     break
   }
-  if (thresh == 'bon'){ #### if you want to subset the input by a threshold (default, thresh = 'qfdr')
-    cutoff = 0.05/88009
-    snp_file = snp_file[which(snp_file$Pvalue<=cutoff),]
-  }
   chroms = as.factor(snp_file[,2])
   snp_file_good = snp_file[,c(1,2,3,5,6,7,4)]
   
   ############### Loop through chromosomes present
-  
-  for (c in levels(chroms)){############ Looks at a set of markers per chromosome and calculates pairwise R2 between them, output a table
+    for (c in levels(chroms)){############ Looks at a set of markers per chromosome and calculates pairwise R2 between them, output a table
     MarkMat = data.frame()
     rishi = snp_file[which(snp_file[,2]==c),]
     rishi = rishi[order(rishi$Pos),]
@@ -64,7 +81,6 @@ for (t in 1:num_env){
     colnames(markers)= "markers"
     
     binmat=NULL
-    
     ##### Run LDselect.pl ##############
     tped = fread(file="./XRQ_213.tped", header = F)
     colnames(tped)[2] = "markers"
@@ -78,7 +94,7 @@ for (t in 1:num_env){
   
   
     ldselectthing = readLines("tmp.bins")
-    #### Number of Bins #####
+    #### Clean output and get number of bins #####
     NoBins = gsub("\tother_snps:.*","",ldselectthing[length(ldselectthing)-1])
     NoBins = gsub("Bin ","",NoBins)
     NoBins = as.numeric(as.character(gsub(" ","",NoBins)))
@@ -242,8 +258,8 @@ for (t in 1:num_env){
       #myColras<- c("aliceblue","blue1","olivedrab2","mediumorchid2", "turquoise1") #need unlimited colors
       rainbowcols = rainbow(10,s=0.5)
       myBreaks <- c(0, .1, .2, .4, .6, .8, 1)
-    pdf(file=paste("../../Outputs/Plots/LD_Plots/",trait,"_",Environment,"_Chr_",c,"_LDplot.pdf",sep=""))
-     print (
+      pdf(file=paste("../../Outputs/Plots/LD_Plots/",trait,"_",Environment,"_Chr_",c,"_LDplot.pdf",sep=""))
+      print (
       ggplot(coffee,aes(x=leftmark, y=test))+
           geom_tile(aes(fill=factor(bla)))+
           geom_tile(aes(alpha=r2value))+
