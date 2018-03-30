@@ -81,7 +81,9 @@ for (t in 1:num_env){
     colnames(markers)= "markers"
     
     binmat=NULL
-    ##### Run LDselect.pl ##############
+    ##### Run LDselect.pl 
+    # LDSelect.pl was created by (Carlson et al 2004) and can be found here: https://droog.gs.washington.edu/ldSelect.html
+    ##################
     tped = fread(file="./XRQ_213.tped", header = F)
     colnames(tped)[2] = "markers"
     tmp.tped = merge(markers,tped,by = "markers")
@@ -143,7 +145,7 @@ for (t in 1:num_env){
     tmp_bin_data = tmp_bin_data[order(tmp_bin_data$Pos),]
  
     ######################################################################################
-    ########### Use PLINK to get R2 values for markers & Create graphs ###################
+    ########### Use PLINKv1.9 to get r2 values for markers & Create graphs ###################
     
     if (length(rishi_markers)==1){ ##### Single Marker ##############
       for(v in 1:NoBins){
