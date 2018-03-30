@@ -1,8 +1,8 @@
 ##########################
 #
-# Author: Rishi R. Masalia, rishimasalia@gmail.com, Sariel Hubner, sariel.hubner@botany.ubc.ca
+# Author: Rishi R. Masalia, rishimasalia@gmail.com
 # 
-# Summary: Burrito is a wrapper for the Manhattanizer (augmentation of Sariel's original Helimap pipeline)
+# Summary: Burrito is a perl wrapper for the Manhattanizer (augmentation of Sariel's original Helimap pipeline)
 # It treats traits and environments individually, and produces a Manhattan plot & list of significant SNPs.
 # EMMAX is run with kinship and structure (PCA) to get associations
 #
