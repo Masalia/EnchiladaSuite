@@ -5,8 +5,6 @@
 # It is designed to take significnat SNPs from a manhattan plot, and identify LD boundaries
 # by looking at pairwise LD across significant SNPs on a chromosome
 #
-# File from where to grab the phenos
-#
 # Run perl SALSA.pl environments.list traits.list
 ########################################
 
