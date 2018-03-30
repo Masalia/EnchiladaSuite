@@ -1,6 +1,6 @@
 ##############################################
 # 
-# Author: Rishi R. Masalia, rishimasalia@gmail.com, UGA, Burke Lab, April 2017
+# Author: Rishi R. Masalia, rishimasalia@gmail.com
 #
 # Purpose: this script is a direct follow up to SALSA by Masalia. 
 # It is designed to take a "Pre_Identified_Cluster.csv" list and create a new list of genes underlying those clusters
@@ -22,14 +22,5 @@ print CONFIG "$comment\n$MainEnv\n$genes\n";
 ############# Run The R Scripts ###########################
 
 system("Rscript GUAC.R Avocado.config");	
-
-#put the data into a folder:
-
-
-
-
-
-
-
 
 
