@@ -4,11 +4,18 @@
 #
 # Authors: Rishi R. Masalia, rishimasalia@gmail.com, Sariel Hubner, sariel.hubner@botany.ubc.ca
 # 
-# Summary: Burrito is a wrapper for the Manhattanizer (augmentation of Sariel's original Helimap pipeline)
+# Summary: This script is run through the Burrito wrapper script (Burrito.pl) and is an expansion of Sariel's original Helimap pipeline)
 # It treats traits and environments individually, and produces a Manhattan plot & list of significant SNPs.
 # EMMAX is run with kinship and structure (PCA) to get associations
 #
 # Preferences are controlled in the configuration file ("Asada.config")
+#
+# Please set the current working directory, by replacing the "PATH" portion. 
+#
+# ******* Hard coded infomration!!! ****** If you are NOT using this for GWAS of 213 genotypes in the SAM population. You
+# have to change some hard coded information. Harded coded infomration starts on lines: 
+#
+# 117 (includes # of markers, # inferred markers [for sig. threshold], map file). All other parameters are defined in the config. file
 #
 #########################################################
 ### Installing and loading required packages
@@ -106,14 +113,18 @@ for(j in 1:num_rep) {
 }
 
 cat ("Reading the map.......................")
+
+###### Hard coded information ########
 snp.map = read.table(file="XRQ_213.map",header= T) 
 
 numLoci = 640508 #New SNP numbers for 213 genotypes (Oct2017)
 InferrMeff = 88009 #Genetered from SNP data through BEAGLEv4.1 
 adj = (0.05/88009) #~LOD6
+
+###### End hard coded information #####
+
 cat("Total number of SNPs is: ", numLoci, "\n")
 cat("Inferred Meff is: ", InferrMeff, "\n")
-#adj<-0.05/sum(simpleMeff)
 adjP<-format(adj, scientific = FALSE)
 
 cat("Corrected threshold is: ", adjP, "\n")
@@ -202,7 +213,11 @@ SumFile<-merge(SigSNPs,Var.file,by.x=5,by.y=1,all.x=TRUE)
 
 SumFile$Phenotypic_Variance<-as.numeric(SumFile$Phenotypic_Variance)
 SumFile$SE_beta<-as.numeric(SumFile$SE_beta)
-PVE<-100*(SumFile$SE_beta^2/SumFile$Phenotypic_Variance)
+
+PVE<-100*(SumFile$SE_beta^2/SumFile$Phenotypic_Variance) 
+#This is PVE as calculated by Sariel. The version of effect size as calculated by Rishi is:
+# abs((2*Beta)/(range of phenotypic variation per envrionment of major - minor allele))*100)
+
 Summary<-data.frame(SumFile[,1:6],PVE)
 
 colnames(snp.map)<-c("SNP_ID","Chr","Pos")
@@ -222,42 +237,42 @@ write.table(Sum2, paste(trait,"_",comparison_name,".sigsnps",sep=""),row.names =
 ### Plot results
 #########################################################
 
-if(pca=="yes"){
-  #1) PCA
-  zeva<-brewer.pal(12,"Set3")
-  group<-read.table(file="../EnchiladaSuite/Burrito/XRQ_213.group",header=FALSE)
-  evPCA<-read.table(paste("../EnchiladaSuite/Burrito/",prefix,".PCA_EV",sep=""),header=FALSE)
-  OrPCA<-merge(evPCA,group,by.x=1,by.y=1)
-  gr<-unique(OrPCA[,7])
-  
-  pdf(paste("../../Outputs/Plots/",prefix,"_PCA.pdf",sep=""))
-  plot(OrPCA[,3],OrPCA[,4],main=paste(prefix," PCA",sep=""),xlab="PC1",ylab="PC2",col=zeva, pch=16)
-  legend("bottomright",legend=gr,fill=zeva)
-  
-  plot(OrPCA[,4],OrPCA[,5],main=paste(prefix," PCA",sep=""),xlab="PC2",ylab="PC3",col=zeva, pch=16) 
-  legend("bottomright",legend=gr,fill=zeva)
-  
-  plot(OrPCA[,5],OrPCA[,6],main=paste(prefix," PCA",sep=""),xlab="PC3",ylab="PC4",col=zeva, pch=16) 
-  legend("bottomright",legend=gr,fill=zeva)
-  
-  dev.off()          
-  
-  
-  #2) kinship
-  aIBS <- read.delim(paste(prefix,".aIBS.kinf",sep=""), header=FALSE)
-  row.names(aIBS)<-evPCA[,1]
-  
-  kinMat<-as.matrix(aIBS)
-  
-  pdf(paste("../../Outputs/Plots/",prefix," KinShip.pdf",sep=""))
-  #heatmap.2(kinMat,main=paste(prefix," KinShip",sep=""),dendrogram='none',trace='none',labRow="",labCol="")
-  heatmap.2(kinMat,main=paste(prefix," KinShip",sep=""),trace='none',labRow="",labCol="")
-  
-  dev.off()
-  rm(kinMat)
-  rm(aIBS)
-} #Kinship and Structure plots
 
+#1) PCA
+zeva<-brewer.pal(12,"Set3")
+group<-read.table(paste("../EnchiladaSuite/Burrito/",GROUP,sep=""),header=FALSE)
+evPCA<-read.table(paste("../EnchiladaSuite/Burrito/",prefix,".PCA_EV",sep=""),header=FALSE)
+OrPCA<-merge(evPCA,group,by.x=1,by.y=1)
+gr<-unique(OrPCA[,7])
+
+pdf(paste("../../Outputs/Plots/",prefix,"_PCA.pdf",sep=""))
+plot(OrPCA[,3],OrPCA[,4],main=paste(prefix," PCA",sep=""),xlab="PC1",ylab="PC2",col=zeva, pch=16)
+legend("bottomright",legend=gr,fill=zeva)
+
+plot(OrPCA[,4],OrPCA[,5],main=paste(prefix," PCA",sep=""),xlab="PC2",ylab="PC3",col=zeva, pch=16) 
+legend("bottomright",legend=gr,fill=zeva)
+
+plot(OrPCA[,5],OrPCA[,6],main=paste(prefix," PCA",sep=""),xlab="PC3",ylab="PC4",col=zeva, pch=16) 
+legend("bottomright",legend=gr,fill=zeva)
+
+dev.off()          
+
+
+#2) kinship
+aIBS <- read.delim(paste(prefix,".aIBS.kinf",sep=""), header=FALSE)
+row.names(aIBS)<-evPCA[,1]
+
+kinMat<-as.matrix(aIBS)
+
+pdf(paste("../../Outputs/Plots/",prefix," KinShip.pdf",sep=""))
+#heatmap.2(kinMat,main=paste(prefix," KinShip",sep=""),dendrogram='none',trace='none',labRow="",labCol="")
+heatmap.2(kinMat,main=paste(prefix," KinShip",sep=""),trace='none',labRow="",labCol="")
+
+dev.off()
+rm(kinMat)
+rm(aIBS)
+
+#3)Manhattan Plots
 cat ("Running Manhattan Plots.........\n")
 reps <- Sys.glob("*.ps")
 ColSet<-c(color1,color2)
@@ -278,12 +293,6 @@ for(r in reps) {
   
   #Print no qfdr:
   manhattan(ps1[ps1$V4<0.01,],chr = "Chr", bp = "Pos", p = "V4", snp = "SNP_ID",main=paste(trait," ",comparison_name,sep=""),col=ColSet,suggestiveline = FALSE,genomewideline=-log10(adj), cex=0.6, cex.axis=0.8,ylim=c(2,ytop))
-  
-  #Print with qfdr:
-  #manhattan(ps1[ps1$V4<0.01,],chr = "Chr", bp = "Pos", p = "V4", snp = "SNP_ID",main=paste(trait," ",comparison_name,sep=""),col=ColSet,suggestiveline=-log10(qfdr),genomewideline=-log10(adj), cex=0.6, cex.axis=0.8,ylim=c(2,ytop))
-  
-  #Print w no qfdr:
-  #manhattan(ps1[ps1$V4<0.01,],chr = "Chr", bp = "Pos", p = "V4", snp = "SNP_ID",main=paste(trait," ",comparison_name,sep=""),col=ColSet,genomewideline=-log10(adj), cex=0.6, cex.axis=0.8,ylim=c(2,ytop))
   
 }
 dev.off()
